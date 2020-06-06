@@ -1,0 +1,50 @@
+#include<Servo.h>
+#include<LiquidCrystal.h>
+LiquidCrystal lcd(12,11,5,4,3,2);
+Servo mini;
+const int trigpin=8;
+const int echopin=10;
+int obstaclpin=7;
+int hasobs=LOW;
+//int angle=180;
+
+void setup()
+{
+mini.attach(9);
+pinMode(obstaclepin, INPUT);
+lcd.begin(16,2);
+}
+void loop()
+{
+long duration, cm;
+pinMode(trigpin,OUTPUT);
+digitalWrite(trigpin,LOW);
+delayMicroseconds(2);
+digitalWrite(trigpin,HIGH);
+delayMicroseconds(10);
+digitalWrite(trigpin,LOW);
+pinMode(echopin,INPUT);
+duration= pulseIn(echopin,HIGH);
+cm= microtocm(duration);
+hasobs= digitalRead(obstaclepin);
+if(hasobs==LOW)
+{
+if(cm==10)
+{
+lcd.print("Slot is Available");
+mini.write(90);
+delay(2000);
+mini.write(0);
+}
+}
+else
+{
+lcd.setCursor(0,0);
+lcd.print("No Slot is Available");
+}
+}
+long microtocm(long microseconds)
+{
+return microseconds2= 29/2;
+}
+
